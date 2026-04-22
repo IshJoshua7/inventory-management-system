@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignments List</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .header { background: #2c3e50; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; }
+        .btn-assign { background: #27ae60; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; }
+        .success { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #34495e; color: white; }
+        .active { background: #27ae60; color: white; padding: 3px 8px; border-radius: 3px; }
+        .returned { background: #95a5a6; color: white; padding: 3px 8px; border-radius: 3px; }
+        .btn-return { background: #e74c3c; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔄 Device Assignments</h1>
+        <a href="/" style="color: white; text-decoration: none;">🏠 Back to Dashboard</a>
+    </div>
+    
+    <div class="container">
+        <div th:if="${success}" class="success" th:text="${success}"></div>
+        <a href="/assignments/assign" class="btn-assign">📌 New Assignment</a>
+        
+        <table>
+            <thead><tr><th>ID</th><th>Device</th><th>Serial #</th><th>Employee</th><th>Department</th><th>Assigned Date</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+                <tr th:each="assign : ${assignments}">
+                    <td th:text="${assign.id}">-</td>
+                    <td th:text="${assign.device.brand + ' ' + assign.device.model}">-</td>
+                    <td th:text="${assign.device.serialNumber}">-</td>
+                    <td th:text="${assign.employee.fullName}">-</td>
+                    <td th:text="${assign.employee.department}">-</td>
+                    <td th:text="${#temporals.format(assign.assignedDate, 'yyyy-MM-dd')}">-</td>
+                    <td><span th:class="${assign.status == 'Active' ? 'active' : 'returned'}" th:text="${assign.status}"></span></td>
+                    <td><a th:if="${assign.status == 'Active'}" th:href="@{/assignments/return/{id}(id=${assign.id})}" class="btn-return" onclick="return confirm('Return this device? Enter condition:')">Return</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

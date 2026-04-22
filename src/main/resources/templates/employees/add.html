@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .header { background: #2c3e50; color: white; padding: 15px 20px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 30px; background: white; border-radius: 10px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-submit { background: #27ae60; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-cancel { background: #7f8c8d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-left: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>➕ Add New Employee</h1></div>
+    
+    <div class="container">
+        <form action="#" th:action="@{/employees/save}" th:object="${employee}" method="post">
+            <div class="form-group"><label>Employee ID:</label><input type="text" th:field="*{employeeId}" required/></div>
+            <div class="form-group"><label>Full Name:</label><input type="text" th:field="*{fullName}" required/></div>
+            <div class="form-group"><label>Department:</label><select th:field="*{department}" required><option th:each="dept : ${departments}" th:value="${dept}" th:text="${dept}"></option></select></div>
+            <div class="form-group"><label>Position:</label><input type="text" th:field="*{position}" required/></div>
+            <div class="form-group"><label>Email:</label><input type="email" th:field="*{email}"/></div>
+            <div class="form-group"><label>Phone (10 digits):</label><input type="text" th:field="*{phone}" maxlength="10"/></div>
+            <div class="form-group"><label>Office Location:</label><input type="text" th:field="*{officeLocation}"/></div>
+            <button type="submit" class="btn-submit">💾 Save Employee</button>
+            <a href="/employees" class="btn-cancel">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Assignment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f4f4f4; }
+        .header { background: #2c3e50; color: white; padding: 15px 20px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 30px; background: white; border-radius: 10px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-submit { background: #27ae60; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; }
+        .btn-cancel { background: #7f8c8d; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; margin-left: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>📌 Assign Device to Employee</h1></div>
+    
+    <div class="container">
+        <form action="#" th:action="@{/assignments/save}" method="post">
+            <div class="form-group"><label>Select Device:</label><select name="deviceId" required><option value="">-- Select Device --</option><option th:each="device : ${devices}" th:value="${device.id}" th:text="${device.brand + ' ' + device.model + ' - ' + device.serialNumber}"></option></select></div>
+            <div class="form-group"><label>Select Employee:</label><select name="employeeId" required><option value="">-- Select Employee --</option><option th:each="emp : ${employees}" th:value="${emp.id}" th:text="${emp.fullName + ' (' + emp.department + ')'}"></option></select></div>
+            <div class="form-group"><label>Purpose:</label><input type="text" name="purpose" required placeholder="e.g., Work from home"/></div>
+            <div class="form-group"><label>Assigned By:</label><input type="text" name="assignedBy" required placeholder="Name"/></div>
+            <button type="submit" class="btn-submit">✅ Assign Device</button>
+            <a href="/assignments" class="btn-cancel">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
